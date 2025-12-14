@@ -116,7 +116,7 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
                   {eduFields.map((field, index) => (
                     <div
                       key={field.id}
-                      className="flex items-center gap-2 bg-gray-50 p-2 rounded-md relative"
+                      className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 p-2 rounded-md relative"
                     >
                       <Input
                         {...register(`educations.${index}.degree`)}
@@ -160,7 +160,7 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
                   {expFields.map((field, index) => (
                     <div
                       key={field.id}
-                      className="flex items-center gap-2 bg-gray-50 p-2 rounded-md relative"
+                      className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 p-2 rounded-md relative"
                     >
                       <Input
                         {...register(`experiences.${index}.role`)}

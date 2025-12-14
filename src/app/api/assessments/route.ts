@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/v2/doctors/appointments?page=${page}&per_page=${pageSize}&search=${search}&date=${date}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/v2/doctors/assessments?page=${page}&per_page=${pageSize}&search=${search}&date=${date}`,
       {
         method: "GET",
         headers: {
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       const error = await response.json();
       console.log(error);
       return NextResponse.json(
-        { message: "Error getting admins" },
+        { message: "Error getting assessments" },
         { status: response.status }
       );
     }

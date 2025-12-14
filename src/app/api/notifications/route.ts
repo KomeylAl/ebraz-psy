@@ -6,11 +6,10 @@ export async function GET(req: NextRequest) {
   const page = params.get("page") || 0;
   const pageSize = params.get("pageSize") || 10;
   const search = params.get("search") || "";
-  const date = params.get("date") || "";
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/v2/doctors/appointments?page=${page}&per_page=${pageSize}&search=${search}&date=${date}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}api/v2/doctors/notifications?page=${page}&per_page=${pageSize}&search=${search}`,
       {
         method: "GET",
         headers: {
@@ -23,7 +22,7 @@ export async function GET(req: NextRequest) {
       const error = await response.json();
       console.log(error);
       return NextResponse.json(
-        { message: "Error getting admins" },
+        { message: `${error ?? "هطا در دریافت اعلانات"}` },
         { status: response.status }
       );
     }

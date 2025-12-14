@@ -1,7 +1,9 @@
+import { useUser } from "@/contexts/UserContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 export function useLogin(onLogedIn: () => void) {
+  const { setUser } = useUser();
   return useMutation({
     mutationFn: async (data: any) => {
       const res = await fetch("/api/auth/login", {
@@ -26,10 +28,10 @@ export function useLogin(onLogedIn: () => void) {
       console.log(error);
     },
     onSuccess: (result) => {
-      console.log(result)
+      setUser(result.user);
+
       toast.success("با موفقیت وارد شدید. لطفا کمی صبر کنید.");
       onLogedIn();
-      return result;
     },
   });
 }

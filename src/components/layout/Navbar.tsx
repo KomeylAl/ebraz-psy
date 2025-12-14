@@ -41,7 +41,7 @@ const Navbar = () => {
     },
     {
       title: "تنظیمات",
-      link: "/admin/settings",
+      link: "/settings",
       access: ["boss", "manager"],
       icon: <Settings />,
     },

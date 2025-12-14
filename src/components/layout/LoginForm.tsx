@@ -12,21 +12,17 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-import placeholder from "../../../public/images/login_placeholder.jpg";
+import imagePlaceholder from "../../../public/images/login_placeholder.jpg";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useUser } from "@/contexts/UserContext";
 import { useLogin } from "@/hooks/useAuth";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [isLoading, setIsLoading] = useState(false);
-  const { setUser } = useUser();
-
   const [formData, setFormData] = useState({
     phone: "",
     password: "",
@@ -34,38 +30,15 @@ export function LoginForm({
 
   const router = useRouter();
   const { mutate: login, isPending } = useLogin(() => {
-    router.push('/');
-  })
+    router.push("/");
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.phone || !formData.password) {
       toast.error("لطفا همه فیلد ها را پر کنید");
     } else {
-      // setIsLoading(true);
-      // const response = await fetch(`/api/auth/login`, {
-      //   method: "POST",
-      //   body: JSON.stringify(formData),
-      // });
-      // if (!response.ok) {
-      //   if (response.status === 401) {
-      //     toast.error("نام کاربری یا رمز عبور اشتباه است");
-      //     setIsLoading(false);
-      //   }
-      //   if (response.status === 500) {
-      //     toast.error("خطا در برقراری ارتباط با سرور");
-      //     setIsLoading(false);
-      //   }
-      // }
-      // if (response.status === 200) {
-      //   const data = await response.json();
-      //   setUser(data.user);
-      //   console.log("user set");
-      //   router.push("/admin");
-      //   setIsLoading(false);
-      // }
-      console.log("ll")
-      login(formData)
+      login(formData);
     }
   };
   return (
@@ -97,7 +70,10 @@ export function LoginForm({
                   id="password"
                   type="password"
                   onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, password: e.target.value }))
+                    setFormData((prev) => ({
+                      ...prev,
+                      password: e.target.value,
+                    }))
                   }
                 />
                 <div className="flex items-center">
@@ -127,7 +103,7 @@ export function LoginForm({
           </form>
           <div className="bg-muted relative hidden md:block">
             <Image
-              src={placeholder}
+              src={imagePlaceholder}
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
