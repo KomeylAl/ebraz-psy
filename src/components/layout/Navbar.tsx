@@ -25,6 +25,11 @@ const Navbar = () => {
       icon: <FileUser />,
     },
     {
+      title: "منایع",
+      link: "/resources",
+      icon: <FileUser />,
+    },
+    {
       title: "نوبت ها",
       link: "/appointments",
       icon: <CalendarCheck />,
