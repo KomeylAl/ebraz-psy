@@ -7,6 +7,7 @@ import {
   FileUser,
   LayoutDashboard,
   Settings,
+  SwatchBook,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { PuffLoader } from "react-spinners";
@@ -24,11 +25,11 @@ const Navbar = () => {
       link: "/resume",
       icon: <FileUser />,
     },
-    {
-      title: "منایع",
-      link: "/resources",
-      icon: <FileUser />,
-    },
+    // {
+    //   title: "منایع",
+    //   link: "/resources",
+    //   icon: <SwatchBook />,
+    // },
     {
       title: "نوبت ها",
       link: "/appointments",

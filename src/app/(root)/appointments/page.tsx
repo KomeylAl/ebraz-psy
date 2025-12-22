@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import persian from "react-date-object/calendars/persian";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import fa from "react-date-object/locales/persian_fa";
@@ -9,7 +9,6 @@ import { debounce } from "lodash";
 import { PuffLoader } from "react-spinners";
 import Table from "@/components/common/Table";
 import { appointmentColumns } from "@/lib/columns";
-import { Button } from "@/components/ui/button";
 import Header from "@/components/layout/Header";
 
 const Appinments = () => {
