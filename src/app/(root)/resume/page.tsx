@@ -32,7 +32,12 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
         ],
         skills: resume?.skills ?? [""],
         certifications: resume?.certifications ?? [""],
-        social_links: resume?.social_links ?? { linkedin: "", instagram: "" },
+        social_links: resume?.social_links ?? {
+          linkedin: "",
+          instagram: "",
+          website: "",
+          twitter: "",
+        },
       });
   }, [resume, reset]);
 
@@ -222,8 +227,18 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
                   className="bg-white"
                 />
                 <Input
+                  {...register("social_links.twitter")}
+                  placeholder="Twitter URL"
+                  className="bg-white"
+                />
+                <Input
                   {...register("social_links.instagram")}
                   placeholder="Instagram URL"
+                  className="bg-white"
+                />
+                <Input
+                  {...register("social_links.website")}
+                  placeholder="Website URL"
                   className="bg-white"
                 />
 
