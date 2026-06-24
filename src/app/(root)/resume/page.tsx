@@ -5,18 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetResume, useSaveResume } from "@/hooks/useResume";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { PuffLoader } from "react-spinners";
 import { Trash2 } from "lucide-react";
 import Header from "@/components/layout/Header";
+import RichTextEditor from "@/components/common/rich-text-editor";
+import { Label } from "@/components/ui/label";
 
 const DoctorResume = ({ doctorId }: { doctorId: string }) => {
   const { data: resume, isLoading, error, refetch } = useGetResume();
 
   const { mutate: saveResume, isPending } = useSaveResume(() => {});
 
-  const { register, control, handleSubmit, reset } = useForm();
+  const { register, control, setValue, handleSubmit, reset } = useForm();
 
   useEffect(() => {
     if (resume)
@@ -30,6 +32,7 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
         experiences: resume?.experiences ?? [
           { role: "", organization: "", from: "", to: "" },
         ],
+        content: resume?.content,
         skills: resume?.skills ?? [""],
         certifications: resume?.certifications ?? [""],
         social_links: resume?.social_links ?? {
@@ -41,6 +44,7 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
       });
   }, [resume, reset]);
 
+  
   const {
     fields: eduFields,
     append: addEdu,
@@ -49,7 +53,7 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
     control,
     name: "educations",
   });
-
+  
   const {
     fields: expFields,
     append: addExp,
@@ -58,7 +62,8 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
     control,
     name: "experiences",
   });
-
+  
+  const [content, setContent] = useState("");
   const onSubmit = (data: any) => {
     if (typeof data.skills === "string") {
       // اگر کاربر فقط یه رشته وارد کرده (با کاما جدا)
@@ -95,20 +100,33 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
             <div className="w-full space-y-3 p-2">
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-4 w-full mx-auto"
+                className="space-y-6 w-full mx-auto"
               >
                 <h2 className="text-xl font-bold">ویرایش رزومه</h2>
 
+                <h3 className="mt-4 font-semibold">عنوان</h3>
                 <Input
                   {...register("title")}
                   placeholder="عنوان"
                   className="bg-white"
                 />
+                <p className="text-sm">
+                  این بخش صرفا برای درک بهتر موتور های جستجو از رزومه شماست و به
+                  کاربران عادی نمایش داده نمیشود.
+                </p>
+
+                <h3 className="mt-4 font-semibold">معرفی کوتاه</h3>
                 <Textarea
                   {...register("bio")}
                   placeholder="توضیحات"
                   className="bg-white"
                 />
+                <p className="text-sm">
+                  این بخش صرفا برای درک بهتر موتور های جستجو از رزومه شماست و به
+                  کاربران عادی نمایش داده نمیشود.
+                </p>
+
+                <h3 className="mt-4 font-semibold">تخصص اصلی</h3>
                 <Input
                   {...register("specialization")}
                   placeholder="تخصص اصلی"
@@ -159,8 +177,20 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
                   </button>
                 </div>
 
+                {/* رزومه */}
+                <h3 className="font-semibold mt-4">رزومه</h3>
+                <div>
+                  <RichTextEditor
+                    content={resume?.content ?? ""}
+                    onChange={(val) => {
+                      setContent(val);
+                      setValue("content", val);
+                    }}
+                  />
+                </div>
+
                 {/* سوابق کاری */}
-                <h3 className="font-semibold mt-4">سوابق کاری</h3>
+                {/* <h3 className="font-semibold mt-4">سوابق کاری</h3>
                 <div className="space-y-2">
                   {expFields.map((field, index) => (
                     <div
@@ -206,36 +236,45 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
                   >
                     + افزودن سابقه جدید
                   </button>
-                </div>
+                </div> */}
 
-                {/* مهارت‌ها */}
-                <h3 className="font-semibold mt-4">مهارت‌ها</h3>
+                {/* رویکرد ها */}
+                <h3 className="font-semibold mt-4">
+                  رویکرد های درمان / مشاوره
+                </h3>
                 <Input
                   {...register("skills")}
                   placeholder="مثلاً CBT, ACT, Mindfulness"
                   className="bg-white"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  مهارت‌ها را با ویرگول جدا کنید.
+                  رویکرد را با ویرگول جدا کنید.
                 </p>
 
                 {/* لینک‌ها */}
                 <h3 className="font-semibold mt-4">لینک‌ها</h3>
+                <Label className="mt-4">لینکداین</Label>
                 <Input
                   {...register("social_links.linkedin")}
                   placeholder="LinkedIn URL"
                   className="bg-white"
                 />
+
+                <Label className="mt-4">توییتر (X)</Label>
                 <Input
                   {...register("social_links.twitter")}
                   placeholder="Twitter URL"
                   className="bg-white"
                 />
+
+                <Label className="mt-4">اینستاگرام</Label>
                 <Input
                   {...register("social_links.instagram")}
                   placeholder="Instagram URL"
                   className="bg-white"
                 />
+
+                <Label className="mt-4">وبسایت شخصی</Label>
                 <Input
                   {...register("social_links.website")}
                   placeholder="Website URL"

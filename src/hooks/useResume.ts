@@ -26,6 +26,7 @@ export function useSaveResume(onDuccess: () => void) {
       const newData = new FormData();
       newData.append("title", formData.title);
       newData.append("bio", formData.bio);
+      newData.append("content", formData.content);
       newData.append("specialization", formData.specialization);
       newData.append("educations", JSON.stringify(formData.educations));
       newData.append("experiences", JSON.stringify(formData.experiences));

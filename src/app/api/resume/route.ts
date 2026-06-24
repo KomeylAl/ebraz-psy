@@ -53,8 +53,6 @@ export async function POST(req: NextRequest) {
 
     const data = await response.json();
 
-    console.log(data);
-
     return NextResponse.json(
       { message: "Resume saved successfuly" },
       { status: 200 }
