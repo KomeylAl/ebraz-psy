@@ -127,7 +127,7 @@ const DoctorResume = ({ doctorId }: { doctorId: string }) => {
                 </p>
 
                 <h3 className="mt-4 font-semibold">تخصص اصلی</h3>
-                <Input
+                <Textarea
                   {...register("specialization")}
                   placeholder="تخصص اصلی"
                   className="bg-white"
